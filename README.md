@@ -1,8 +1,8 @@
-Gascend
+# Gascend
 
 A simple LPG cylinder booking and management system built as a CBSE Class XII Computer Science final project.
 
-Features
+## Features
 
 * Customer management
 * LPG cylinder inventory
@@ -10,13 +10,13 @@ Features
 * Delivery and payment status tracking
 * Relational database with primary and foreign keys
 
-Tech Stack
+## Tech Stack
 
 * Python
 * SQLite
 * SQL
 
-Database
+## Database
 
 GasBookingDB consists of three tables:
 
@@ -24,6 +24,6 @@ GasBookingDB consists of three tables:
 * Cylinders
 * Bookings
 
-About
+## About
 
 Developed to demonstrate database design, SQL operations, and relational database management.
