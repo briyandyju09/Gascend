@@ -1,20 +1,8 @@
-# ==============================================================
-#   ONLINE GAS BOOKING & MANAGEMENT SYSTEM
-#   Group 6
-#   Frontend : Python 3.14 (IDLE)
-#   Backend  : MySQL  (database GasBookingDB)
-#   Interface: mysql.connector
-#
-#   Run THIS file. It needs helpers.py, customer.py and admin.py
-#   in the same folder.
-# ==============================================================
-
 from helpers import *
 from customer import register, customer_login
 from admin import admin_login
 
 def main():
-    # helpers.py already tried to connect; stop if it failed
     if con is None:
         return
 
@@ -40,7 +28,6 @@ def main():
             else:
                 print("Invalid choice.")
         except Error as e:
-            # any database error is shown instead of crashing the program
             con.rollback()
             print("Database error:", e)
 
