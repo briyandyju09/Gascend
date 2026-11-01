@@ -1,33 +1,20 @@
-# ==============================================================
-#   ONLINE GAS BOOKING & MANAGEMENT SYSTEM  -  helpers.py
-#   Settings, database connection, table setup and the small
-#   functions used by both customer.py and admin.py
-# ==============================================================
-
 import mysql.connector
 from mysql.connector import Error
 from datetime import date
 
-# ---------- connection settings (change if your MySQL is different) ----------
 HOST = "localhost"
 USER = "root"
 PASSWD = "root"
 PORT = 3306
 DB_NAME = "GasBookingDB"
 
-# ---------- admin login ----------
 ADMIN_USER = "admin"
 ADMIN_PASS = "admin123"
 
-MAX_QTY = 2          # a customer can book at most 2 cylinders at a time
+MAX_QTY = 2 
 
 con = None
 cur = None
-
-
-# ==============================================================
-#                    DATABASE SETUP
-# ==============================================================
 
 def connect():
     """Connects to MySQL, creates the database and tables if needed."""
@@ -65,7 +52,6 @@ def connect():
                     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
                     FOREIGN KEY (Cylinder_ID) REFERENCES Cylinders(Cylinder_ID))""")
 
-    # add some starting stock the first time the program runs
     cur.execute("SELECT COUNT(*) FROM Cylinders")
     if cur.fetchone()[0] == 0:
         data = [("Domestic 14.2 kg", 50, 853.00),
@@ -77,9 +63,6 @@ def connect():
         con.commit()
 
 
-# ==============================================================
-#                    HELPER FUNCTIONS
-# ==============================================================
 
 def line(n=70):
     print("-" * n)
@@ -147,7 +130,6 @@ def show_bookings(rows):
     line(100)
 
 
-# all booking queries join the three tables so names are shown instead of IDs
 BOOKING_QUERY = """SELECT B.Booking_ID, C.Name, Y.Cylinder_Type, B.Booking_Date,
                           B.Quantity, B.Booking_Status, B.Delivery_Status, B.Payment_Status
                    FROM Bookings B, Customers C, Cylinders Y
@@ -168,9 +150,6 @@ def return_stock(cyl_id, qty):
                 "WHERE Cylinder_ID = %s", (qty, date.today(), cyl_id))
 
 
-
-# connect as soon as this file is imported, so customer.py and
-# admin.py get a ready connection when they do "from helpers import *"
 try:
     connect()
 except Error as e:
