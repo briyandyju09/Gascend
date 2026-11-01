@@ -1,10 +1,5 @@
-# ==============================================================
-#   ONLINE GAS BOOKING & MANAGEMENT SYSTEM  -  customer.py
-#   Everything a customer can do: register, login, book,
-#   track, cancel and update profile
-# ==============================================================
-
 from helpers import *
+
 
 def register():
     print("\n===== NEW CUSTOMER REGISTRATION =====")
@@ -49,7 +44,6 @@ def customer_login():
 
 def book_cylinder(cid):
     print("\n===== BOOK A CYLINDER =====")
-    # only one active booking is allowed at a time
     cur.execute("SELECT COUNT(*) FROM Bookings WHERE Customer_ID = %s AND "
                 "Booking_Status IN ('Pending', 'Approved') AND Delivery_Status <> 'Delivered'",
                 (cid,))
@@ -77,7 +71,6 @@ def book_cylinder(cid):
         cur.execute("INSERT INTO Bookings(Customer_ID, Cylinder_ID, Booking_Date, Quantity) "
                     "VALUES(%s, %s, %s, %s)", (cid, cyl, date.today(), qty))
         bid = cur.lastrowid
-        # reduce stock straight away so the same cylinders are not booked twice
         cur.execute("UPDATE Cylinders SET Stock = Stock - %s, Last_Updated = %s "
                     "WHERE Cylinder_ID = %s", (qty, date.today(), cyl))
         con.commit()
